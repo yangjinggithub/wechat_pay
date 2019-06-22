@@ -4,6 +4,7 @@ import lombok.Data;
 import org.hibernate.annotations.DynamicUpdate;
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.Date;
 
@@ -11,7 +12,7 @@ import java.util.Date;
 @Data
 @DynamicUpdate
 //@Table(name="product_info") 按照了去掉下划线首字母大写的规则 就可以不用指定
-public class ProductInfo {
+public class ProductInfo implements Serializable {
 
     @Id
     private String productId;

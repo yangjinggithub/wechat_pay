@@ -8,7 +8,6 @@ import com.xmcc.entity.ProductCategory;
 import com.xmcc.entity.ProductInfo;
 import com.xmcc.repository.ProductCategoryRepository;
 import com.xmcc.repository.ProductInfoRepository;
-import com.xmcc.service.ProductCategoryService;
 import com.xmcc.service.ProductInfoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -26,6 +25,7 @@ public class ProductInfoServiceImpl implements ProductInfoService {
 
     @Override
     public ResultResponse queryList() {
+        System.out.println("正在获取商品列表");
         //查询所有分类
         List<ProductCategory> all = productCategoryRepository.findAll();
         //转成dto

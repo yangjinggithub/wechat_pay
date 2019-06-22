@@ -11,6 +11,7 @@ import java.util.List;
  */
 //第一个参数 是实体类名称  第二个参数是主键类型
 public interface ProductCategoryRepository extends JpaRepository<ProductCategory,Integer> {
+    //？1表示第一个参数
     @Query(value = "select category_name from product_category where category_id=?" +
             "1 and category_id=?2",nativeQuery = true)
     List<String> queryNameByIdAndType(Integer id,Integer type);
