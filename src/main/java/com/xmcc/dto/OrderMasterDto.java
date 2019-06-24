@@ -2,7 +2,10 @@ package com.xmcc.dto;
 
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 import org.hibernate.validator.constraints.Length;
 
 import javax.validation.Valid;
@@ -13,6 +16,9 @@ import java.util.List;
 
 @Data
 @ApiModel("订单参数实体类")
+@AllArgsConstructor
+@NoArgsConstructor
+@Builder
 public class OrderMasterDto implements Serializable {
 
     @NotBlank(message = "姓名不能为空")
