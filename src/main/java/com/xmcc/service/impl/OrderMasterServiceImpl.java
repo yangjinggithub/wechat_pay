@@ -108,7 +108,6 @@ public class OrderMasterServiceImpl implements OrderMasterService {
 
     @Override
     public ResultResponse queryList(OrderPageDto orderPageDto) {
-
         String openid = orderPageDto.getOpenid();
         Integer page = orderPageDto.getPage();
         Integer size = orderPageDto.getSize();
@@ -142,5 +141,18 @@ public class OrderMasterServiceImpl implements OrderMasterService {
         }
         orderMasterListDto.setOrderDetailList(orderDetails);
         return ResultResponse.success(orderMasterListDto);
+    }
+
+    @Override
+    public ResultResponse cancel(OrderCancelDto orderCancelDto) {
+        String openid = orderCancelDto.getOpenid();
+        String orderId = orderCancelDto.getOrderId();
+
+        /*List<OrderDetail> orderDetails = orderDetailRepository.findByOrderId(orderId);
+        for (OrderDetail orderDetail:orderDetails) {
+            Integer quantity = orderDetail.getProductQuantity();
+        }*/
+
+        return ResultResponse.success();
     }
 }

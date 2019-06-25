@@ -30,7 +30,7 @@ public class OrderMasterController {
     @PostMapping("create")
     @ApiOperation(value = "创建订单接口", httpMethod = "POST", response = ResultResponse.class)
     public ResultResponse create(@Valid@ApiParam(name = "订单对象",value = "传入json格式",required = true)
-                                 OrderMasterDto orderMasterDto, BindingResult bindingResult){
+            OrderMasterDto orderMasterDto, BindingResult bindingResult){
         Map<String,String> map = Maps.newHashMap();
         //参数校检
         if(bindingResult.hasErrors()) {
@@ -44,20 +44,50 @@ public class OrderMasterController {
     }
 
     @GetMapping("list")
-    @ApiOperation(value = "查询订单列表")
-    public ResultResponse list(OrderPageDto orderPageDto){
+    @ApiOperation(value = "查询订单列表", httpMethod = "GET", response = ResultResponse.class)
+    public ResultResponse list(@Valid@ApiParam(name = "订单对象",value = "传入json格式",required = true)
+            OrderPageDto orderPageDto, BindingResult bindingResult){
+        Map<String,String> map = Maps.newHashMap();
+        //参数校检
+        if(bindingResult.hasErrors()) {
+            List<String> errList = bindingResult.getFieldErrors().stream().map(err ->
+                    err.getDefaultMessage()).collect(Collectors.toList());
+            map.put("参数校验错误", JsonUtil.object2string(errList));
+            //将参数校验的错误信息返回给前台
+            return ResultResponse.fail(map);
+        }
         return orderMasterService.queryList(orderPageDto);
     }
 
     @GetMapping("detail")
-    @ApiOperation(value = "查询订单详情")
-    public ResultResponse detail(OrderQueryDto orderQueryDto){
+    @ApiOperation(value = "查询订单详情", httpMethod = "GET", response = ResultResponse.class)
+    public ResultResponse detail(@Valid@ApiParam(name = "订单对象",value = "传入json格式",required = true)
+            OrderQueryDto orderQueryDto, BindingResult bindingResult){
+        Map<String,String> map = Maps.newHashMap();
+        //参数校检
+        if(bindingResult.hasErrors()) {
+            List<String> errList = bindingResult.getFieldErrors().stream().map(err ->
+                    err.getDefaultMessage()).collect(Collectors.toList());
+            map.put("参数校验错误", JsonUtil.object2string(errList));
+            //将参数校验的错误信息返回给前台
+            return ResultResponse.fail(map);
+        }
         return orderMasterService.queryDetail(orderQueryDto);
     }
 
     @PostMapping("cancel")
-    @ApiOperation(value = "取消订单")
-    public ResultResponse cancel(OrderCancelDto orderCancelDto){
-        return ResultResponse.success();
+    @ApiOperation(value = "取消订单", httpMethod = "POST", response = ResultResponse.class)
+    public ResultResponse cancel(@Valid@ApiParam(name = "订单对象",value = "传入json格式",required = true)
+            OrderCancelDto orderCancelDto, BindingResult bindingResult){
+        Map<String,String> map = Maps.newHashMap();
+        //参数校检
+        if(bindingResult.hasErrors()) {
+            List<String> errList = bindingResult.getFieldErrors().stream().map(err ->
+                    err.getDefaultMessage()).collect(Collectors.toList());
+            map.put("参数校验错误", JsonUtil.object2string(errList));
+            //将参数校验的错误信息返回给前台
+            return ResultResponse.fail(map);
+        }
+        return orderMasterService.cancel(orderCancelDto);
     }
 }
