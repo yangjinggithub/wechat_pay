@@ -10,4 +10,5 @@ public interface ProductInfoService {
     ResultResponse<ProductInfo> queryById(String productId);
 
     void updateProduct(ProductInfo productInfo);
+
 }

@@ -37,6 +37,8 @@ public class OrderMasterServiceImpl implements OrderMasterService {
     @Autowired
     private ProductInfoService productInfoService;
     @Autowired
+    private ProductInfoRepository productInfoRepository;
+    @Autowired
     private OrderDetailService orderDetailService;
     @Autowired
     private OrderDetailRepository orderDetailRepository;
@@ -148,11 +150,16 @@ public class OrderMasterServiceImpl implements OrderMasterService {
         String openid = orderCancelDto.getOpenid();
         String orderId = orderCancelDto.getOrderId();
 
-        /*List<OrderDetail> orderDetails = orderDetailRepository.findByOrderId(orderId);
-        for (OrderDetail orderDetail:orderDetails) {
-            Integer quantity = orderDetail.getProductQuantity();
-        }*/
-
+        OrderMaster orderMaster = orderMasterRepository.findByBuyerOpenidAndOrderId(openid, orderId);
+        orderMaster.setOrderStatus(OrderEnums.CANCEL.getCode());
+        orderMasterRepository.save(orderMaster);
+        List<OrderDetail> orderDetailList = orderDetailRepository.findByOrderId(orderId);
+        for(OrderDetail detail:orderDetailList){
+            Integer quantity = detail.getProductQuantity();
+            ProductInfo productInfo = productInfoRepository.queryByProductId(detail.getProductId());
+            productInfo.setProductStock(productInfo.getProductStock()+quantity);
+            productInfoRepository.save(productInfo);
+        }
         return ResultResponse.success();
     }
 }

@@ -9,13 +9,14 @@ import me.chanjar.weixin.mp.bean.result.WxMpOAuth2AccessToken;
 import me.chanjar.weixin.mp.bean.result.WxMpUser;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import java.io.UnsupportedEncodingException;
 import java.net.URLDecoder;
 import java.net.URLEncoder;
-
+@CrossOrigin
 @Controller
 @RequestMapping("wechat")
 @Slf4j
@@ -26,6 +27,7 @@ public class WechatController {
 
     //根据api接口书写路径
     @RequestMapping("authorize")
+    //returnUrl构建网页授权的URL
     public String authorize(@RequestParam("returnUrl")String returnUrl) throws UnsupportedEncodingException {
         //自己编写获得openID的路径 在下面自定义方法getUserInfo
         String url = "http://xmcc.natapp1.cc/sell/wechat/getUserInfo";

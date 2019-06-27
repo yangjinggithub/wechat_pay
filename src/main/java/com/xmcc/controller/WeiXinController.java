@@ -1,11 +1,12 @@
 package com.xmcc.controller;
 
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.client.RestTemplate;
-
+@CrossOrigin
 @RestController
 @RequestMapping("weixin")
 @Slf4j
@@ -14,6 +15,7 @@ public class WeiXinController {
     public void getCode(@RequestParam("code")String code){
         log.info("进入getCode回调方法");
         log.info("获得当前微信用户的授权码为:{}",code);
+        //通过code获取令牌
         String url = "https://api.weixin.qq.com/sns/oauth2/access_token?appid=wxcec0b9e65c084712&" +
                 "secret=05a7e861c1985ced86af77fb8f7163bc&code="+code+"&grant_type=authorization_code";
         RestTemplate restTemplate = new RestTemplate();
