@@ -113,7 +113,9 @@ public class OrderMasterServiceImpl implements OrderMasterService {
         String openid = orderPageDto.getOpenid();
         Integer page = orderPageDto.getPage();
         Integer size = orderPageDto.getSize();
-
+        if(page<=0){
+            page=1;
+        }
         PageRequest pageRequest = PageRequest.of(page, size);
         Specification<String> confusion = new Specification<String>(){
             @Override
@@ -151,8 +153,12 @@ public class OrderMasterServiceImpl implements OrderMasterService {
         String orderId = orderCancelDto.getOrderId();
 
         OrderMaster orderMaster = orderMasterRepository.findByBuyerOpenidAndOrderId(openid, orderId);
+        if(orderMaster.getOrderStatus().equals(OrderEnums.FINSH.getCode())||orderMaster==null){
+            return ResultResponse.fail(OrderEnums.FINSH.getMsg());
+        }
         orderMaster.setOrderStatus(OrderEnums.CANCEL.getCode());
         orderMasterRepository.save(orderMaster);
+
         List<OrderDetail> orderDetailList = orderDetailRepository.findByOrderId(orderId);
         for(OrderDetail detail:orderDetailList){
             Integer quantity = detail.getProductQuantity();
